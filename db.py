@@ -50,6 +50,9 @@ def insertIntoDb(rawData, table_name , rowInfo,dbName ,flag, columnParams):
                             values.append(float(row[col_name]))
                         else:
                             values.append(row[col_name])
+                    else: 
+                        print("Couldn't process file because some required fields are missing")
+                        return
                 else:
                     if col_type == "INTEGER":
                         values.append(int(row[col_name]))
@@ -161,7 +164,9 @@ if __name__ == "__main__":
 #A      B       C
 #1      1.4     3
 #JF     1       1.4
+#1.4    3       3
 
 #A      B       C
 #int    float   int
 #str    float   float
+#
