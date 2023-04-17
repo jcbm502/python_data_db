@@ -46,21 +46,21 @@ def insertIntoDb(rawData, table_name , rowInfo,dbName ,flag, columnParams):
             for col_name, col_type in rowInfo.items():
                 if flag == 'false':
                     if col_name in filterColumns:
-                        if col_type == "INTEGER":
-                            values.append(int(row[col_name]))
-                        elif col_type == "REAL":
-                            values.append(float(row[col_name]))
-                        else:
+                        # if col_type == "INTEGER":
+                        #     values.append(int(row[col_name]))
+                        # elif col_type == "REAL":
+                        #     values.append(float(row[col_name]))
+                        # else:
                             values.append(row[col_name])
                     else: 
                         print("Couldn't process file because some required fields are missing")
                         return
                 else:
-                    if col_type == "INTEGER":
-                        values.append(int(row[col_name]))
-                    elif col_type == "REAL":
-                        values.append(float(row[col_name]))
-                    else:
+                    # if col_type == "INTEGER":
+                    #     values.append(int(row[col_name]))
+                    # elif col_type == "REAL":
+                    #     values.append(float(row[col_name]))
+                    # else:
                         values.append(row[col_name])
             values_str = ",".join("?" * len(values))
             insert_sql = f"INSERT OR REPLACE INTO {table_name} VALUES ({values_str})"
