@@ -2,6 +2,8 @@ import sqlite3
 import os
 import pandas as pd
 import sys
+import math
+
 dbTypes = {
     "int" : "INTEGER",
     "str" : "TEXT",
@@ -132,19 +134,24 @@ def readFile():
             for col in df_regrid.columns:
                 if refridFlag =='false' and not col in filterColumns:
                     continue
-                currentType = dbTypes[type(row[col]).__name__]
+                currentType = 'TEXT' if pd.isna(row[col]) else dbTypes[type(row[col]).__name__]
                 if col in columns_file1:
                     columnType = columns_file1.get(col)
-
+                    if col == 'parcelnumb_no_formatting':
+                        continue
                     if columnType == currentType:
                         continue
                     if columnType == 'TEXT':
+                        columns_file1[col] = currentType
                         continue
                     if currentType == 'INTEGER':
                         continue
 
                     columns_file1[col] = currentType
                 else:
+                    if col == 'parcelnumb_no_formatting':
+                        columns_file1[col] = 'TEXT'
+                        continue
                     columns_file1[col] = currentType
         # insertIntoDb(df_regrid, 'ga_clayton_table', columns_file1)
         if not dbExist:
